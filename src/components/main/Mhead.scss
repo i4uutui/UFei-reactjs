@@ -1,0 +1,79 @@
+.header-D {
+  height: 68px;
+  position: relative;
+  z-index: 9;
+  padding-left: 30px;
+  .modalPassword{
+    .ant-modal-footer{
+      text-align: center;
+    }
+    .ant-modal-title{
+      text-align: center;
+    }
+  }
+  .ant-popover-inner{
+    padding: 0;
+    .clickHeaderList {
+      padding: 12px 0 !important;
+      .item {
+        cursor: pointer;
+        font-size: 14px;
+        padding: 10px 12px;
+        width: 200px;
+        &:hover {
+          background-color: rgba(133, 219, 190, 0.2);
+        }
+      }
+    }
+  }
+  .left{
+    
+    .h1{
+      color: #4AB250;
+      font-size: 30px;
+      font-weight: bold;
+      padding-left: 134px;
+    }
+    .logo{
+      width: 105px;
+      img{
+        width: 100%;
+      }
+    }
+  }
+  .right {
+    padding-right: 60px;
+
+    .userInfo {
+      padding-left: 40px;
+
+      .userName {
+        font-size: 16px;
+        padding-left: 12px;
+      }
+
+      .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+        font-size: 0;
+        position: relative;
+        img{
+          width: 100%;
+          position: absolute;
+        }
+      }
+    }
+
+    .msg {
+      position: relative;
+
+      .el-icon-Bell {
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
+  }
+}

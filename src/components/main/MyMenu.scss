@@ -1,0 +1,53 @@
+.MyMenu{
+  .ant-menu{
+    .ant-menu-submenu{
+      .ant-menu-item.ant-menu-item-selected{
+        .ant-menu-title-content{
+          color: #FFFFFF !important;
+        }
+      }
+      .ant-menu.ant-menu-sub{
+        .ant-menu-title-content{
+          margin-inline-start: 0 !important;
+          color: #989898;
+        }
+      }
+      .ant-menu-submenu-title{
+        margin: 0;
+        width: 100%;
+        height: 56px;
+        line-height: 56px;
+        &:hover, &:active{
+          background-color: #ebfff1 !important;
+        }
+        .ant-menu-title-content{
+          margin-inline-start: 24px !important;
+          color: #989898;
+        }
+      }
+    }
+    .ant-menu-item{
+      margin: 0;
+      width: 100%;
+      height: 56px;
+      .ant-menu-title-content{
+        margin-inline-start: 24px !important;
+        color: #989898;
+      }
+      &.ant-menu-item-selected{
+        background-color: #4ab250;
+        color: #FFFFFF;
+        .ant-menu-title-content{
+          color: #FFFFFF;
+        }
+        &:hover, &:active{
+          background-color: #4ab250 !important;
+          color: #FFFFFF;
+        }
+      }
+      &:hover, &:active{
+        background-color: #ebfff1 !important;
+      }
+    }
+  }
+}

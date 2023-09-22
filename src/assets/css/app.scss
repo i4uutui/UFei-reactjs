@@ -1,0 +1,35 @@
+@import url("./reset.css");
+@import url("./common.scss");
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+html,
+body {
+  overflow: hidden;
+  background-color: #F5FAF5;
+}
+
+img {
+  width: 100%;
+}
+.td .el-form-item{
+  margin-bottom: 8px;
+}
+.box{
+  padding: 14px;
+  background-color: #fff;
+  height: calc(100% - 42px);
+}

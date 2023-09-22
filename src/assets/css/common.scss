@@ -1,0 +1,81 @@
+.flex {
+  display: flex;
+  align-items: center;
+  flex-direction: row
+}
+.flex-wrap {
+  flex-wrap: wrap
+}
+.row-left {
+  justify-content: flex-start
+}
+.row-center {
+  justify-content: center
+}
+.row-right {
+  justify-content: flex-end
+}
+.row-between {
+  justify-content: space-between
+}
+.text-left {
+  text-align: left
+}
+.text-center {
+  text-align: center
+}
+.text-right {
+  text-align: right
+}
+.flex-1{
+  flex: 1;
+}
+.flex-2{
+  flex: 2;
+}
+.flex-3{
+  flex: 3;
+}
+.w100{
+  width: 100%;
+}
+// .btn {
+//   margin: 0;
+//   padding: 0;
+//   border: 1px solid transparent;
+//   outline: 0;
+//   background-color: transparent;
+//   cursor: pointer
+// }
+
+// 定义字体(px)单位，小于20都为px单位字体
+@for $i from 12 through 48 {
+	.f#{$i} {
+		font-size: $i + px;
+	}
+}
+
+// 定义内外边距，历遍1-80
+@for $i from 1 through 80 {
+	// 只能被5除尽的数
+	@if $i % 5 == 0 {
+    @each $short, $leftTop, $rightBottom in lr left right, tb top bottom {
+    	.m#{$short}#{$i} {
+    		margin-#{$leftTop}: $i + px!important;
+        margin-#{$rightBottom}: $i + px!important;
+    	}
+    	.p#{$short}#{$i} {
+    		padding-#{$leftTop}: $i + px!important;
+        padding-#{$rightBottom}: $i + px!important;
+    	}
+    }
+		@each $short, $long in l left, t top, r right, b bottom {
+			.m#{$short}#{$i} {
+				margin-#{$long}: $i + px!important;
+			}
+			.p#{$short}#{$i} {
+				padding-#{$long}: $i + px!important;
+			}
+		}
+	}
+}
