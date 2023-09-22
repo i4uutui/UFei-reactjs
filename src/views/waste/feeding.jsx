@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ProForm } from '@ant-design/pro-components';
 import { RedoOutlined, SearchOutlined } from '@ant-design/icons';
-import { Table } from 'antd';
+import { Table, Pagination } from 'antd';
 import { post } from '@/api';
 
 import MyInput from '../../components/from/MyInput';
@@ -13,13 +13,9 @@ function Feeding(){
   const [ correctState, setCorrectState ] = useState([]);
   const [ deliveryDetailType, setDeliveryDetailType ] = useState([]);
   const [ dataList, setDataList ] = useState([]);
-
-  let tableCfg = {
-    tableData: []
-  }
-  let current = 1;
-  let size = 15;
-  let total = 0;
+  const [ total, setTotal ] = useState([]);
+  const [ current, setCurrent ] = useState(1);
+  const [ size, setSize ] = useState(10);
 
   let getDic = async () => {
     let params = {
@@ -48,8 +44,7 @@ function Feeding(){
     var res = await post('/admin/deliveryDetail/page', params);
     if (res.succeed) {
       var data = res.data;
-      total = data.total;
-      // tableCfg.tableData = data.records;
+      setTotal(data.total);
       setDataList(data.records)
     }
   }
@@ -195,7 +190,13 @@ function Feeding(){
       } } onFinish={ onFinish }>
         <MyInput child={inputContent}></MyInput>
       </ProForm>
-      <Table columns={columns} dataSource={dataList} />
+      <Table columns={columns} dataSource={dataList} pagination={{
+          position: ['none', 'bottomCenter'],
+          pageSize: size,
+          current: current,
+          total: total,
+          showTotal: (total) => `共 ${total} 条`
+        }} />
     </div>
   )
 }
