@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ProForm } from '@ant-design/pro-components';
 import { RedoOutlined, SearchOutlined } from '@ant-design/icons';
-import { Table, Pagination } from 'antd';
+import { Table, Button, Space } from 'antd';
+import { useSelector } from "react-redux";
 import { post } from '@/api';
+import { priceFormat, setValue } from '@/utils';
 
 import MyInput from '../../components/from/MyInput';
+import ElementAuto from '../Element'; // 用来计算表格的高度，实现一个页面显示所有东西
 
 function Feeding(){
   let form = {}
@@ -13,9 +16,13 @@ function Feeding(){
   const [ correctState, setCorrectState ] = useState([]);
   const [ deliveryDetailType, setDeliveryDetailType ] = useState([]);
   const [ dataList, setDataList ] = useState([]);
+
+  const [ eleTotal, setEleTotal ] = useState(0);
   const [ total, setTotal ] = useState([]);
   const [ current, setCurrent ] = useState(1);
-  const [ size, setSize ] = useState(10);
+  const [ size, setSize ] = useState(15);
+
+  const sideView = useSelector(state => state.store.sideView);
 
   let getDic = async () => {
     let params = {
@@ -47,13 +54,6 @@ function Feeding(){
       setTotal(data.total);
       setDataList(data.records)
     }
-  }
-  useEffect(() => {
-    getDic();
-  }, [])
-  
-  const onFinish = (e) => {
-    console.log(e);
   }
 
   const inputContent = [
@@ -145,59 +145,160 @@ function Feeding(){
       label: '设备名称',
       name: 'deviceName',
       props: {size: 'small', allowClear: false}
-    },
-  ]
-
+    }
+  ];
   const columns = [
     {
       title: 'ID',
       dataIndex: 'id',
-      name: 'id'
+      name: 'id',
+      width: 80,
+      align: 'center'
     },
     {
       title: '公司名称',
       dataIndex: 'companyName',
-      name: 'companyName'
+      name: 'companyName',
+      align: 'center',
+      width: 140
     },
     {
       title: '设备名称',
       dataIndex: 'deviceName',
-      name: 'deviceName'
+      name: 'deviceName',
+      align: 'center',
     },
     {
       title: '投料类型',
       dataIndex: 'type',
       name: 'type',
-      render: (text) => <a>{text == 1 ? '设备投料' : text == 2 ? '人工记账' : '修正投料'}</a>
-    }
+      align: 'center',
+      render: (text) => text == 1 ? '设备投料' : text == 2 ? '人工记账' : '修正投料'
+    },
+    {
+      title: '废料名称',
+      dataIndex: 'wasteName',
+      name: 'wasteName',
+      align: 'center',
+    },
+    {
+      title: '投料重量(kg)',
+      dataIndex: 'deliveryWeight',
+      name: 'deliveryWeight',
+      align: 'right',
+      render: (text) => priceFormat(text, 2)
+    },
+    {
+      title: '投料时间',
+      dataIndex: 'deliveryAt',
+      name: 'deliveryAt',
+      align: 'center',
+    },
+    {
+      title: '投料人',
+      dataIndex: 'deliveryWeight',
+      name: 'deliveryWeight',
+      align: 'center',
+      render: (text, row) => {
+        let listValue = ['tlUserNickName', 'tlUserName', 'tlCardRemark' ,'tlCardCode']
+        return setValue(row, listValue);
+      }
+    },
+    {
+      title: '工号',
+      dataIndex: 'tlUserJobNum',
+      name: 'tlUserJobNum',
+      align: 'center',
+    },
+    {
+      title: '项目码',
+      dataIndex: 'xlCode',
+      name: 'xlCode',
+      align: 'center',
+    },
+    {
+      title: 'PSA区域号',
+      dataIndex: 'psaCode',
+      name: 'psaCode',
+      align: 'center',
+    },
+    {
+      title: 'SAP物料号',
+      dataIndex: 'sapCode',
+      name: 'sapCode',
+      align: 'center',
+    },
+    {
+      title: '操作',
+      align: 'center',
+      fixed: 'right',
+      width: 100,
+      render: (text, row) => {
+        return (
+          <Space wrap>
+          
+            {
+              row.correctPermission && sideView.includes('waste:deliveryDetail:correct') ? (
+                <Button type="primary" size="small">修正</Button>
+              ) : ''
+            }
+            {
+              row.type == 3 && sideView.includes('waste:deliveryDetail:view') ? (
+                <Button type="primary" size="small">查看详情</Button>
+              ) : ''
+            }
+          </Space>
+        )
+      }
+    },
   ]
+  
+  const setPage = (page, pageSize) => {
+    setCurrent(page);
+    setSize(pageSize);
+    getList();
+  }
+  const onFinish = (e) => {
+    console.log(e);
+  }
+
+  const boxElement = useRef(null);
+  const formElement = useRef(null);
+  useEffect(() => {
+    getDic();
+  }, [])
 
   return(
-    <div className='box'>
-      <ProForm layout="inline" submitter={ {
-        searchConfig: {
-          submitText: '搜索',
-          resetText: '重置',
-        },
-        submitButtonProps: {
-          size: 'small',
-          icon: <SearchOutlined />
-        },
-        resetButtonProps: {
-          size: 'small',
-          icon: <RedoOutlined />
-        }
-      } } onFinish={ onFinish }>
-        <MyInput child={inputContent}></MyInput>
-      </ProForm>
-      <Table columns={columns} dataSource={dataList} pagination={{
-          position: ['none', 'bottomCenter'],
-          pageSize: size,
-          current: current,
-          total: total,
-          showTotal: (total) => `共 ${total} 条`
-        }} />
-    </div>
+    <ElementAuto ele={ { boxElement, formElement } } handleTotal={(value) => setEleTotal(value)}>
+      <div className='box' ref={boxElement}>
+        <div ref={formElement} style={ {marginBottom: '15px'} }>
+          <ProForm layout="inline" submitter={ {
+            searchConfig: {
+              submitText: '搜索',
+              resetText: '重置',
+            },
+            submitButtonProps: {
+              size: 'small',
+              icon: <SearchOutlined />
+            },
+            resetButtonProps: {
+              size: 'small',
+              icon: <RedoOutlined />
+            }
+          } } onFinish={ onFinish }>
+            <MyInput child={inputContent}></MyInput>
+          </ProForm>
+        </div>
+        <Table rowKey="id" bordered size="small" columns={columns} dataSource={dataList} scroll={{ y: eleTotal, x: 1600 }} pagination={{
+            position: ['none', 'bottomCenter'],
+            pageSize: size,
+            current: current,
+            total: total,
+            showTotal: (total) => `共 ${total} 条`,
+            onChange: (page, pageSize) => setPage(page, pageSize)
+          }} />
+      </div>
+    </ElementAuto>
   )
 }
 

@@ -31,5 +31,11 @@ img {
 .box{
   padding: 14px;
   background-color: #fff;
-  height: calc(100% - 42px);
+  height: 100%;
+}
+.ant-table-container tr:nth-child(2n + 1){
+  background-color:#fafafa;
+}
+.ant-table-container td{
+  vertical-align: middle;
 }
