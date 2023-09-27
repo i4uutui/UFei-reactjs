@@ -61,90 +61,89 @@ function Feeding(){
       type: 'date',
       label: '日期',
       name: 'dateRange',
-      props: {size: 'small'}
     },
     {
       type: 'text',
       label: '公司名称',
       name: 'companyName',
-      props: {size: 'small', allowClear: false}
+      props: {allowClear: false}
     },
     {
       type: 'select',
       label: '公司类型',
       name: 'companyType',
       list: companyType,
-      props: { size: 'small', style:{width: '175px'}, fieldNames: {label: 'name', value: 'code'} }
+      props: { fieldNames: {label: 'name', value: 'code'} }
     },
     {
       type: 'text',
       label: '设备编码',
       name: 'deviceCode',
-      props: {size: 'small', allowClear: false}
+      props: {allowClear: false}
     },
     {
       type: 'text',
       label: '废料名称',
       name: 'wasteName',
-      props: {size: 'small', allowClear: false}
+      props: {allowClear: false}
     },
     {
       type: 'select',
       label: '投料类型',
       name: 'type',
       list: deliveryDetailType,
-      props: { size: 'small', style:{width: '175px'}, fieldNames: {label: 'name', value: 'code'} }
+      props: { fieldNames: {label: 'name', value: 'code'} }
     },
     {
       type: 'select',
       label: '投料状态',
       name: 'state',
       list: correctState,
-      props: { size: 'small', style:{width: '175px'}, fieldNames: {label: 'name', value: 'code'} }
+      props: { fieldNames: {label: 'name', value: 'code'} }
     },
     {
       type: 'select',
       label: '废料状态',
       name: 'storageFlag',
       list: [{ name: '已暂存', code: 1 }, { name: '未暂存', code: 0 }],
-      props: { size: 'small', style:{width: '175px'}, fieldNames: {label: 'name', value: 'code'} }
+      props: { fieldNames: {label: 'name', value: 'code'} }
     },
     {
       type: 'select',
       label: '卡标签',
       name: 'tlCardTag',
       list: deviceCardTag,
-      props: { size: 'small', style:{width: '175px'}, fieldNames: {label: 'name', value: 'code'} }
+      props: { fieldNames: {label: 'name', value: 'code'} }
     },
     {
       type: 'text',
       label: '项目码',
       name: 'xlCode',
-      props: {size: 'small', allowClear: false}
+      props: {allowClear: false}
     },
     {
       type: 'text',
       label: 'PSA区域号',
       name: 'psaCode',
-      props: {size: 'small', allowClear: false}
+      props: {allowClear: false}
     },
     {
       type: 'text',
       label: 'SAP物料号',
       name: 'sapCode',
-      props: {size: 'small', allowClear: false}
+      props: {allowClear: false}
     },
     {
       type: 'text',
       label: '工号',
       name: 'jobNum',
-      props: {size: 'small', allowClear: false}
+      props: {allowClear: false}
     },
     {
       type: 'text',
       label: '设备名称',
       name: 'deviceName',
-      props: {size: 'small', allowClear: false}
+      props: {allowClear: false}
     }
   ];
   const columns = [
@@ -185,7 +184,7 @@ function Feeding(){
       title: '投料重量(kg)',
       dataIndex: 'deliveryWeight',
       name: 'deliveryWeight',
-      align: 'right',
+      align: 'center',
       render: (text) => priceFormat(text, 2)
     },
     {
@@ -193,6 +192,7 @@ function Feeding(){
       dataIndex: 'deliveryAt',
       name: 'deliveryAt',
       align: 'center',
+      width: 160
     },
     {
       title: '投料人',
@@ -230,7 +230,7 @@ function Feeding(){
     },
     {
       title: '操作',
-      align: 'center',
+      align: 'left',
       fixed: 'right',
       width: 100,
       render: (text, row) => {

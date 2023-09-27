@@ -47,8 +47,8 @@ export default defineConfig({
 			],
 		},
 	},
-	// server:{
-	// 	port: 8012,
-	// 	host: "192.168.130.40"
-	// }
+	server:{
+		port: 8012,
+		host: "192.168.130.40"
+	}
 })
